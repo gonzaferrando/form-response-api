@@ -1,4 +1,5 @@
 using FormResponse.Api.DTOs;
+using FormResponse.Api.Filters;
 using FormResponse.Api.ThirdParties;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,11 +16,12 @@ namespace FormResponse.Api.Controllers
             _fillOutApi = fillOutApi;
         }
 
-        [HttpGet]
+        [HttpGet("{formId}/filteredResponses")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromRoute] string formId, [FromQuery] List<Filter>? filters)
         {
-            var filloutForm = await _fillOutApi.GetAsync<FilloutFormResponse>("/forms/cLZojxk94ous");
+            var filloutForm = await _fillOutApi.GetAsync<FilloutFormResponse>($"/forms/{formId}/submissions");
+
             return Ok(filloutForm);
         }
     }
