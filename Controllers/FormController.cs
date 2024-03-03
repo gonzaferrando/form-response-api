@@ -1,7 +1,6 @@
 using FormResponse.Api.DTOs;
 using FormResponse.Api.ThirdParties;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace FormResponse.Api.Controllers
 {
@@ -17,11 +16,10 @@ namespace FormResponse.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Get()
         {
-            var response = await _fillOutApi.GetAsync("/forms/cLZojxk94ous");
-            var rrrppp = await response.Content.ReadAsStringAsync();
-            var filloutForm = JsonConvert.DeserializeObject<FilloutFormResponse>(rrrppp);
+            var filloutForm = await _fillOutApi.GetAsync<FilloutFormResponse>("/forms/cLZojxk94ous");
             return Ok(filloutForm);
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface IHttpApiClient
     {
-        Task<HttpResponseMessage> GetAsync(string url);
+        Task<T> GetAsync<T>(string url);
     }
 }
